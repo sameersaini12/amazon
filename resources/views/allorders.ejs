@@ -1,0 +1,48 @@
+<section class="allorders-container">
+    <div class="">
+        <h2>Your Orders</h2>
+    </div>
+    <% console.log(orders) %>
+    <% for(let j=0;j<orders.length;j++) { %>
+    <% for(let order of Object.values(orders[j].items)) { %>
+        <div class="order-container">
+            <div class="order-upper">
+                <div class="order-upper-date">
+                    <p>ORDER PLACED</p>
+                    <p>29 Jan 2020</p>
+                </div>
+                <div class="order-upper-total">
+                    <p>TOTAL</p>
+                    <p>Rs. <%= order.item.price*order.qty %></p>
+                </div>
+                <div class="order-upper-id">
+                    <p>ORDER # <% for(let i=0;i<7 ; i++) { %>
+                        <%= order.item._id[i]; %>
+                        <% }  %>..</p>
+                    <p>Order Details | Invoice v</p>
+                </div>
+            </div>
+            <div class="order-lower">
+                <h2><%= orders[j].status %></h2>
+                <div class="order-lower-container">
+                <div class="order-details">
+                    <img class="order-lower-image" src="<%= order.item.image %>">
+                    <div class="order-details-text">
+                        <p><%= order.item.title %> </p>
+                        <small style="color: red;">Rs. <%= order.item.price %></small>
+                        <a href="/"><button  class="" >Buy again</button></a>
+                    </div>
+                </div>
+                <div class="order-lower-buttons">
+                    <a href="/orders/<%= orders[j]._id %>"><button class="">Track Pacakage</button></a>
+                    <a href="/"><button class="">Write Review</button></a>
+                    <a href="/"><button class="">Share Order</button></a>
+                    <a href="/"><button class="">Archive Order</button></a>
+                </div>
+            </div>
+            </div>
+            
+        </div>
+   <% }} %>
+    
+</section>

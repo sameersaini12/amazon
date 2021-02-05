@@ -1,0 +1,75 @@
+<div class="payment">
+    <div class="payment_container">
+        <img style="margin: 35px;" src="/img/delivery-banner.gif" alt="" >
+        <div class="payment_section">
+            <div class="payment_title">
+                <h3>Delivery address</h3>
+            </div>
+            <div class="payment_address">
+                <% if(addresses.length) { %>
+                    <b><p><%= user.name %></p></b>
+                    <p><%= addresses[0].address %></p>
+                    <p><%= addresses[0].pincode %></p>
+                    <p>India</p>
+                    <p><%= addresses[0].phone %></p>
+                    <form id="change-address" action="/changeaddress" method="POST">
+                        <a onclick="document.getElementById('change-address').submit() " style="text-decoration: none; color: black;" href="#"><button> Change Address</button></a>
+                        </form>
+                    <% } else { %>
+                <form action="/address" method="POST">
+                <input type="text" name="phone" placeholder="Phone No."><br>
+                <input type="text" name="pincode" placeholder="Pin Code"><br>
+                <input type="text" name="address" placeholder="Full Address"><br>
+                <button type="submit">Add Address</button>
+            </form>
+            <% } %>
+            </div>
+        </div>
+        <div class="payment_section">
+            <div class="payment_title">
+                <h3>Review Items and delivery</h3>
+            </div>
+            <div class="payment_items">
+                <% for(let product of Object.values(session.cart.items)) { %>
+                    <div class="checkoutProduct">
+                      <img class="checkoutProduct_image" src="<%= product.item.image %>" alt="" />
+                      <div class="checkoutProduct_info">
+                        <p class="checkoutProduct_title"><%= product.item.title %></p>
+                        <p class="checkoutProduct_price">
+                          <small>₹</small>
+                          <strong><%= product.item.price %></strong>
+                          <button>Qty: <%= product.qty %></button>
+                        </p>
+                        <div class="product_rating">
+                          <% for(var i=0;i<product.item.rating ; i++) { %>
+                            <p>⭐</p>
+                            <% } %>
+                        </div>
+                        <button data-rmproduct="<%= JSON.stringify(product)%>" class="remove-from-basket" >Remove from basket</button>
+                      </div>
+                    </div>
+                    <% } %>
+            </div>
+        </div>
+        <div class="payment_section">
+            <div class="payment_title">
+                <h3>Payment Method</h3>
+            </div>
+            <div class="payment_details">
+                <form >
+                    <div class="payment_price_container">
+        
+                <button>
+                    <span>Buy Now</span>
+                </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="place-order">
+            <form action="/placeanorder" method="POST">
+            <button type="submit">Place an Order</button>
+            </form>
+        </div>
+    </div>
+</div>

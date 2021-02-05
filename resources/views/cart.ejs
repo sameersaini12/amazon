@@ -1,0 +1,55 @@
+<div class="checkout">
+    <div class="checkout_left">
+      <img
+        class="checkout_ad"
+        src="https://images-na.ssl-images-amazon.com/images/G/02/UK_CCMP/TM/OCC_Amazon1._CB423492668_.jpg"
+        alt=""
+      />
+
+      <div>
+        <h2 class="checkout_title">Your shopping Basket</h2>
+        <% if(!session.cart) { %>
+      <div class="">
+        <h2>Your Shopping List is Empty</h2>
+        <p>
+          You have no items in your basket. To buy one or more items, click on
+          "Add to basket" next to the item.
+        </p>
+      </div>
+      <% } else { for(let product of Object.values(session.cart.items)) { %>
+        <div class="checkoutProduct">
+          <img class="checkoutProduct_image" src="<%= product.item.image %>" alt="" />
+          <div class="checkoutProduct_info">
+            <p class="checkoutProduct_title"><%= product.item.title %></p>
+            <p class="checkoutProduct_price">
+              <small>₹</small>
+              <strong><%= product.item.price %></strong>
+              <button>Qty: <%= product.qty %></button>
+            </p>
+            <div class="product_rating">
+              <% for(var i=0;i<product.item.rating ; i++) { %>
+                <p>⭐</p>
+                <% } %>
+            </div>
+            <button data-rmproduct="<%= JSON.stringify(product)%>" class="remove-from-basket" >Remove from basket</button>
+          </div>
+        </div>
+        <% } %>
+      </div>
+    </div>
+
+
+    <div class="checkout_right">
+      <form  class="subtotal" action="/orders" method="POST">
+           Subtotal(<%= session.cart.totalQty %> items): Rs. <%= session.cart.totalPrice %>
+            <small class="subtotal_gift">
+                <input type="checkbox" name="addgift"/> This order contain a gift
+              </small>
+              <% if(user) { %>
+            <a href="/checkout"><button >Proceed to checkout</button> </a><% }else { %>
+              <button><a href="/login" style="text-decoration: none;">Login to checkout</a></button>
+              <% } %>
+        </form>
+    </div>
+    <% } %>
+  </div>
